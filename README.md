@@ -17,7 +17,7 @@ pip install tensorboardX
 
 ## Data Preparation
 
-* Download the RGB-D raw data from [Google drive](https://www.google.com/search?q=%23%E5%9C%A8%E8%BF%99%E9%87%8C%E6%9B%BF%E6%8D%A2%E4%B8%BA%E6%82%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9B%86%E9%93%BE%E6%8E%A5)
+* Download the RGB-D raw data from [Google drive](https://drive.google.com/drive/folders/1tZydny9By986G0NtUTd6k7V36Fn78wcI?usp=drive_link)
 
 Note that the depth maps of the raw data above are foreground is white.
 
@@ -50,7 +50,7 @@ python eval.py
 ## Saliency Maps
 We provide the saliency maps of DUT-RGBD, LFSD, NJU2K, NLPR, SSD, DES datasets.
 
-RGB-D [Google drive](请在这里替换为您的真实分享链接)
+RGB-D [Google drive](https://drive.google.com/drive/folders/1OB-lFteJw3mCMcgEL--rdQar-KOGFgYv?usp=drive_link)
 
 ## Trained Models
 RGB-D [Google drive](https://drive.google.com/file/d/1-h1vz1DwIKbTqZ-BGt3jQQjs181uU3Kw/view?usp=drive_link)
