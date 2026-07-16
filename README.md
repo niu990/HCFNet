@@ -24,9 +24,9 @@ Note that the depth maps of the raw data above are foreground is white.
 ## Training & Testing
 
 * Train the HCFNet:
-i. download the pretrained Swin Transformer V2-B pth from [Google drive](请在这里替换为您的真实分享链接) and place it into the `./pre/` folder.
-ii. modify the `rgb_root` `depth_root` `gt_root` `pdepth_root` in `train.py` according to your own data path.
-iii. run `python train.py`
+i. download the pretrained Swin Transformer V2-B pth from [Google drive](请在这里替换为您的真实分享链接) and place it into the `./pre/` folder.  
+ii. modify the `rgb_root` `depth_root` `gt_root` `pdepth_root` in `train.py` according to your own data path.  
+iii. run `python train.py`  
 * Test the HCFNet:
     Run the following command to generate saliency maps. Please configure your own dataset and weights paths:
     ```bash
