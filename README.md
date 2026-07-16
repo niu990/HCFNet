@@ -43,17 +43,19 @@ pip install pysodmetrics
 ```
 ii. Run the evaluation script:
 
-Bash
+```bash
 python eval.py
-Saliency Maps
+```
+
+## Saliency Maps
 We provide the saliency maps of DUT-RGBD, LFSD, NJU2K, NLPR, SSD, DES datasets.
 
 RGB-D Google drive
 
-Trained Models
+## Trained Models
 RGB-D Google drive
 
-Contact
+## Contact
 If you have any questions about the code or the paper, please feel free to contact:
 
 Hanqing Niu
