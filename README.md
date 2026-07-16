@@ -40,6 +40,7 @@ We use the [PySODMetrics](https://github.com/lartpang/PySODMetrics) library for 
 i. Install the required evaluation metric library:
 ```bash
 pip install pysodmetrics
+```
 ii. Run the evaluation script:
 
 Bash
