@@ -42,7 +42,8 @@ i. Install the required evaluation metric library:
    pip install pysodmetrics
 ii. run `python eval.py`
 
-## Saliency Maps
+
+* ## Saliency Maps
 
 We provide the saliency maps of DUT-RGBD, LFSD, NJU2K, NLPR, SSD, DES datasets.
 
