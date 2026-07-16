@@ -24,16 +24,17 @@ parser.add_argument('--decay_epoch', type=int, default=60)
 parser.add_argument('--gpu_id', type=str, default='0')
 parser.add_argument('--exp_name', type=str, default='HCFNet_Final')
 
-parser.add_argument('--lambda_mi', type=float, default=0.1,
-                    help='MI loss global weight (default: 0.1, set 0 to disable)')
-parser.add_argument('--mi_tau', type=float, default=0.15,
-                    help='MI loss temperature (default: 0.15)')
-parser.add_argument('--mi_stage2_weight', type=float, default=0.5,
-                    help='Stage2 MI loss relative weight (default: 0.5)')
+# 将所有 mi_ 前缀更正为 align_
+parser.add_argument('--lambda_align', type=float, default=0.1,
+                    help='Alignment loss global weight (default: 0.1, set 0 to disable)')
+parser.add_argument('--align_tau', type=float, default=0.15,
+                    help='Alignment loss temperature (default: 0.15)')
+parser.add_argument('--align_stage2_weight', type=float, default=0.5,
+                    help='Stage2 Alignment loss relative weight (default: 0.5)')
 parser.add_argument('--shift_small', type=int, default=2,
-                    help='small shift for MI loss negative sample')
+                    help='small shift for Alignment loss negative sample')
 parser.add_argument('--shift_large', type=int, default=8,
-                    help='large shift for MI loss negative sample')
+                    help='large shift for Alignment loss negative sample')
 
 # Data path
 parser.add_argument('--rgb_root', type=str, default='./Dataset/train/RGB/')
@@ -57,7 +58,7 @@ def structure_loss(pred, mask):
     return (wbce + wiou).mean()
 
 
-def train(train_loader, model, mi_loss_fn, optimizer, scaler, epoch, total_step, writer):
+def train(train_loader, model, align_loss_fn, optimizer, scaler, epoch, total_step, writer):
     model.train()
     optimizer.zero_grad(set_to_none=True)
     loss_record = 0.0
@@ -79,13 +80,13 @@ def train(train_loader, model, mi_loss_fn, optimizer, scaler, epoch, total_step,
                     if k in sides and sides[k] is not None:
                         loss_side = loss_side + structure_loss(sides[k], gts) * 0.5
 
-            loss_mi = torch.tensor(0.0, device=images.device)
-            if opt.lambda_mi > 0:
-                mi1 = mi_loss_fn(neck_info.get("dcm_info_1", None))
-                mi2 = mi_loss_fn(neck_info.get("dcm_info_2", None))
-                loss_mi = mi1 + opt.mi_stage2_weight * mi2
+            loss_align = torch.tensor(0.0, device=images.device)
+            if opt.lambda_align > 0:
+                align1 = align_loss_fn(neck_info.get("dcm_info_1", None))
+                align2 = align_loss_fn(neck_info.get("dcm_info_2", None))
+                loss_align = align1 + opt.align_stage2_weight * align2
 
-            total_loss = (loss_main + loss_side + loss_mi) / opt.accumulation_steps
+            total_loss = (loss_main + loss_side + loss_align) / opt.accumulation_steps
 
         scaler.scale(total_loss).backward()
 
@@ -102,7 +103,7 @@ def train(train_loader, model, mi_loss_fn, optimizer, scaler, epoch, total_step,
             print(f'{datetime.now()} [Epoch {epoch:03d}] [Step {i:04d}/{total_step:04d}] '
                   f'Loss: {total_loss.item() * opt.accumulation_steps:.4f} | '
                   f'Main: {loss_main.item():.4f} | Side: {loss_side.item():.4f} | '
-                  f'MI: {loss_mi.item():.4f}')
+                  f'Align: {loss_align.item():.4f}')
 
     epoch_loss = loss_record / total_step
     writer.add_scalar('Train/TotalLoss', epoch_loss, epoch)
@@ -153,8 +154,8 @@ if __name__ == '__main__':
     os.makedirs(save_path, exist_ok=True)
     writer = SummaryWriter(os.path.join(save_path, 'summary'))
 
-    print(f"==> MI Loss Config: lambda_mi={opt.lambda_mi}, tau={opt.mi_tau}, "
-      f"stage2_weight={opt.mi_stage2_weight}, "
+    print(f"==> Alignment Loss Config: lambda_align={opt.lambda_align}, tau={opt.align_tau}, "
+      f"stage2_weight={opt.align_stage2_weight}, "
       f"shift_small={opt.shift_small}, shift_large={opt.shift_large}")
 
     model = HCFNet(
@@ -166,9 +167,9 @@ if __name__ == '__main__':
     optimizer = torch.optim.Adam(model.parameters(), opt.lr)
     scaler = torch.cuda.amp.GradScaler()
 
-    mi_loss_fn = AlignmentLoss(
-        lambda_mi=opt.lambda_mi,
-        tau=opt.mi_tau,
+    align_loss_fn = AlignmentLoss(
+        lambda_mi=opt.lambda_align,
+        tau=opt.align_tau,
         shift_small=opt.shift_small,
         shift_large=opt.shift_large
     ).cuda()
@@ -184,5 +185,5 @@ if __name__ == '__main__':
 
     for epoch in range(1, opt.epoch + 1):
         adjust_lr(optimizer, opt.lr, epoch, opt.decay_rate, opt.decay_epoch)
-        train(train_loader, model, mi_loss_fn, optimizer, scaler, epoch, len(train_loader), writer)
+        train(train_loader, model, align_loss_fn, optimizer, scaler, epoch, len(train_loader), writer)
         validate(model, epoch, writer, save_path)
