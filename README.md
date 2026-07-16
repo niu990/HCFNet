@@ -40,21 +40,19 @@ We use the [PySODMetrics](https://github.com/lartpang/PySODMetrics) library for 
 i. Install the required evaluation metric library:
 ```bash
 pip install pysodmetrics
-ii. run `python eval.py`
+ii. Run the evaluation script:
 
-
-* ## Saliency Maps
-
+Bash
+python eval.py
+Saliency Maps
 We provide the saliency maps of DUT-RGBD, LFSD, NJU2K, NLPR, SSD, DES datasets.
 
-* RGB-D [Google drive].([#在这里替换为您的显著性图下载链接])
+RGB-D Google drive
 
-## Trained Models
+Trained Models
+RGB-D Google drive
 
-* RGB-D [Google drive].([#在这里替换为您的训练模型下载链接])
-
-## Contact
-
+Contact
 If you have any questions about the code or the paper, please feel free to contact:
 
 Hanqing Niu
