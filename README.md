@@ -53,7 +53,7 @@ We provide the saliency maps of DUT-RGBD, LFSD, NJU2K, NLPR, SSD, DES datasets.
 RGB-D [Google drive](https://drive.google.com/drive/folders/1OB-lFteJw3mCMcgEL--rdQar-KOGFgYv?usp=drive_link)
 
 ## Trained Models
-RGB-D [Google drive](https://drive.google.com/file/d/1-h1vz1DwIKbTqZ-BGt3jQQjs181uU3Kw/view?usp=drive_link)
+HCFNet [Google drive](https://drive.google.com/file/d/1-h1vz1DwIKbTqZ-BGt3jQQjs181uU3Kw/view?usp=drive_link)
 
 ## Contact
 If you have any questions about the code or the paper, please feel free to contact:
