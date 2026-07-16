@@ -58,5 +58,5 @@ RGB-D Google drive
 ## Contact
 If you have any questions about the code or the paper, please feel free to contact:
 
-Hanqing Niu
+Hanqing Niu  
 Email: niuhanqing@stu.hebtu.edu.cn
