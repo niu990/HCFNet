@@ -33,13 +33,13 @@ iii. run `python train.py`
     python test.py --test_path ./Dataset/val/ --pth_path ./Checkpoint/HCFNet_Final/HCFNet_best.pth
     ```
 
-* ## Evaluation
+## Evaluation
 
 We use the [PySODMetrics](https://github.com/lartpang/PySODMetrics) library for quantitative evaluation. 
 
 i. Install the required evaluation metric library:
-   ```bash
-   pip install pysodmetrics
+```bash
+pip install pysodmetrics
 ii. run `python eval.py`
 
 
